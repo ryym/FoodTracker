@@ -46,6 +46,14 @@
                                     <constraint firstItem="NKa-El-LCt" firstAttribute="leading" secondItem="czy-MX-LhY" secondAttribute="leading" id="oNq-a7-lnT"/>
                                 </constraints>
                             </stackView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="xX3-8j-5cT">
+                                <rect key="frame" x="16" y="150" width="320" height="320"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0zS-LN-RsH" appends="YES" id="yEG-Y4-cNg"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -58,10 +66,20 @@
                     <connections>
                         <outlet property="mealNameLabel" destination="3N1-OU-S04" id="ead-DD-827"/>
                         <outlet property="nameTextField" destination="NKa-El-LCt" id="baz-DF-rZX"/>
+                        <outlet property="photoImageView" destination="xX3-8j-5cT" id="U2M-lQ-jUG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0zS-LN-RsH">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="aOi-Ad-FYX"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="133.59999999999999" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="defaultPhoto" width="3000" height="2000"/>
+    </resources>
 </document>
