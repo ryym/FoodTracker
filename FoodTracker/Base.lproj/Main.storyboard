@@ -76,6 +76,7 @@
                         <outlet property="mealNameLabel" destination="3N1-OU-S04" id="ead-DD-827"/>
                         <outlet property="nameTextField" destination="NKa-El-LCt" id="baz-DF-rZX"/>
                         <outlet property="photoImageView" destination="xX3-8j-5cT" id="U2M-lQ-jUG"/>
+                        <outlet property="ratingControl" destination="s9e-me-P4b" id="yr7-jf-X17"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
