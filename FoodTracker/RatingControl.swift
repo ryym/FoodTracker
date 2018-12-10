@@ -58,7 +58,7 @@ import UIKit
         }
         ratingButtons.removeAll()
 
-        for _ in 0..<starCount {
+        for idx in 0..<starCount {
             let button = UIButton()
 
             // Set button images.
@@ -72,6 +72,8 @@ import UIKit
             button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
 
+            button.accessibilityLabel = "Set \(idx + 1) star rating"
+
             button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
 
             addArrangedSubview(button)
@@ -83,8 +85,16 @@ import UIKit
     }
 
     private func updateButtonSelectionStates() {
-        for (index, button) in ratingButtons.enumerated() {
-            button.isSelected = index < rating
+        let valueString: String
+        if rating == 0 {
+            valueString = "No rating set."
+        } else {
+            valueString = "\(rating) \(rating == 1 ? "star" : "stars") set."
+        }
+        for (idx, button) in ratingButtons.enumerated() {
+            button.isSelected = idx < rating
+            button.accessibilityHint = idx + 1 == rating ? "Tap to reset the rating to the zero." : nil
+            button.accessibilityValue = valueString
         }
     }
 
