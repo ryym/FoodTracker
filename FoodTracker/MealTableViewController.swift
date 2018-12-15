@@ -37,7 +37,7 @@ class MealTableViewController: UITableViewController {
         meals += [meal1, meal2, meal3]
     }
 
-    // MARK: - Table view data source
+    // MARK: Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // Our meal table view is simple and has a single section.
@@ -64,5 +64,15 @@ class MealTableViewController: UITableViewController {
         cell.ratingControl.rating = meal.rating
 
         return cell
+    }
+
+    // MARK: Actions
+
+    @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+        if let source = sender.source as? MealViewController, let meal = source.meal {
+            let newIndexPath = IndexPath(row: meals.count, section: 0)
+            meals.append(meal)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
     }
 }

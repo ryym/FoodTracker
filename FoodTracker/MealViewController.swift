@@ -6,18 +6,45 @@
 //
 
 import UIKit
+import os.log
 
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: Properties
+
     @IBOutlet weak var nameTextField: UITextField!
+
     @IBOutlet weak var photoImageView: UIImageView!
+
     @IBOutlet weak var ratingControl: RatingControl!
+    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+
+    var meal: Meal?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         nameTextField.delegate = self
+        updateSaveButtonState()
+    }
+
+    // MARK: Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        // Configure the destination view controller only when the save button is pressed.
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            os_log("The save button is not pressed, cancelling", log: .default, type: .debug)
+            return
+        }
+
+        let name = nameTextField.text ?? ""
+        let photo = photoImageView.image
+        let rating = ratingControl.rating
+
+        meal = Meal(name: name, photo: photo, rating: rating)
     }
 
     // MARK: Actions
@@ -39,6 +66,16 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         return true
     }
 
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the save button while editing.
+        saveButton.isEnabled = false
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateSaveButtonState()
+        navigationItem.title = textField.text
+    }
+
     // MARK: UIImagePickerControllerDelegate
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -55,6 +92,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
         photoImageView.image = selectedImage
         dismiss(animated: true, completion: nil)
+    }
+
+    private func updateSaveButtonState() {
+        saveButton.isEnabled = !(nameTextField.text ?? "").isEmpty
     }
 }
 
