@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 class MealTableViewController: UITableViewController {
     // MARK: Properties
@@ -66,13 +67,50 @@ class MealTableViewController: UITableViewController {
         return cell
     }
 
+    // MARK: Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        switch (segue.identifier ?? "") {
+        case "AddItem":
+            os_log("Adding a new meal", log: .default, type: .debug)
+
+        case "ShowDetail":
+            guard let mealViewController = segue.destination as? MealViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+
+            guard let selectedMealCell = sender as? MealTableViewCell else {
+                fatalError("Unexpected sender: \(sender ?? "no sender")")
+            }
+
+            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+
+            let selectedMeal = meals[indexPath.row]
+            mealViewController.meal = selectedMeal
+
+        default:
+            fatalError("Unexpected segue identifier: \(segue.identifier ?? "no identifier")")
+        }
+    }
+
     // MARK: Actions
 
+    // Called when a user taps the Save button in the meal detail view.
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let source = sender.source as? MealViewController, let meal = source.meal {
-            let newIndexPath = IndexPath(row: meals.count, section: 0)
-            meals.append(meal)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            // If a user are editing an existing meal, a corresponding row must be selected.
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                meals[selectedIndexPath.row] = meal
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            } else {
+                let newIndexPath = IndexPath(row: meals.count, section: 0)
+                meals.append(meal)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
 }

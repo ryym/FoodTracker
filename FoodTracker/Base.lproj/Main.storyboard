@@ -52,6 +52,7 @@
                                     <outlet property="nameLabel" destination="bxT-dO-HAp" id="cgx-aj-mLk"/>
                                     <outlet property="photoImageView" destination="IWn-l5-pww" id="6nJ-oH-Fng"/>
                                     <outlet property="ratingControl" destination="3YH-Wp-fQJ" id="8IH-7k-ecb"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="6dK-UH-dhn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -80,8 +81,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="czy-MX-LhY">
-                                <rect key="frame" x="16" y="84" width="343" height="416"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="czy-MX-LhY">
+                                <rect key="frame" x="16" y="84" width="343" height="410"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NKa-El-LCt">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -99,8 +100,8 @@
                                             <outletCollection property="gestureRecognizers" destination="0zS-LN-RsH" appends="YES" id="yEG-Y4-cNg"/>
                                         </connections>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s9e-me-P4b" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
-                                        <rect key="frame" x="45.5" y="366" width="252" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s9e-me-P4b" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
+                                        <rect key="frame" x="45.5" y="366" width="252" height="44"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="starCount">
                                                 <integer key="value" value="5"/>
@@ -185,10 +186,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wfg-My-RRw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1072.8" y="133.5832083958021"/>
+            <point key="canvasLocation" x="1134" y="490"/>
         </scene>
     </scenes>
     <resources>
         <image name="defaultPhoto" width="3000" height="2000"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="6dK-UH-dhn"/>
+    </inferredMetricsTieBreakers>
 </document>
