@@ -19,7 +19,11 @@ class MealTableViewController: UITableViewController {
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
 
-        loadSampleMeals()
+        if let savedMeals = loadMeals() {
+            meals += savedMeals
+        } else {
+            loadSampleMeals()
+        }
     }
 
     private func loadSampleMeals() {
@@ -40,6 +44,21 @@ class MealTableViewController: UITableViewController {
         }
 
         meals += [meal1, meal2, meal3]
+    }
+
+    private func saveMeals() {
+        do {
+            try NSKeyedArchiver.archivedData(withRootObject: meals, requiringSecureCoding: false)
+            os_log("Meals successfully saved", log: .default, type: .error)
+        } catch {
+            os_log("Failed to save meals...", log: .default, type: .error)
+        }
+    }
+
+    private func loadMeals() -> [Meal]? {
+        // `unarchiveObject` is deprecated but I could not find an alternative way to
+        // load and unarchive data from a file.
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.ArchiveURL.path) as? [Meal]
     }
 
     // MARK: Table view data source
@@ -78,6 +97,7 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             meals.remove(at: indexPath.row)
+            saveMeals()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -126,6 +146,8 @@ class MealTableViewController: UITableViewController {
                 meals.append(meal)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+
+            saveMeals()
         }
     }
 }
